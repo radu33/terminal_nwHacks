@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Activity.PanelActivity"
-            android:label="@string/title_activity_panel" >
+            android:label="@string/title_activity_panel"
+            android:exported="true">
         </activity>
     </application>
 
