@@ -1,5 +1,5 @@
 Email: green.tea.student@gamil.com
-Pass: nwhackathon
+Pass: the second c of our purpose
 
 goto https://www.firebase.com/login/ and login.
 
