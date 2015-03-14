@@ -42,4 +42,24 @@ public class Task {
         mEndTime = endTime;
 
     }
+
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescrition() {
+        return mDescrition;
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public GregorianCalendar getStartTime() {
+        return mStartTime;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return mEndTime;
+    }
 }

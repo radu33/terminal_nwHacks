@@ -60,4 +60,27 @@ public class Minion {
     }
 
 
+    public String getName() {
+        return mName;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public double getLong() {
+        return mLong;
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public Task getCurrentTask() {
+        return mCurrentTask;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return mTasks;
+    }
 }
