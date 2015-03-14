@@ -1,4 +1,3 @@
-$def with ()
 <head>
     <style>
          table, th, td {
@@ -7,6 +6,9 @@ $def with ()
 
     </style>
     
+
+    <!-- <meta http-equiv="refresh" content="5" > -->
+>>>>>>> 1157f3d1a9a54a04da25e49f1bbe157df69f3ffd
     <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCbZTRKl5_gf8hpukMd_AhcuTeFr2slj8I"></script>
@@ -23,9 +25,14 @@ $def with ()
     </script>
 </head>
 
-<body onLoad="buildTaskTable">
-    <table id="alertTable" onLoad="buildAlertTable()">
+<body >
+    <script>
+        var baseRef = 'https://curo.firebaseio.com/'
+        var ref = new Firebase(baseRefs)
+    </script>
+    <table id="alertTable">
     </table>
+
     <table id="taskTable" >
         <title>Task Table</title>
         <tr>
@@ -36,7 +43,10 @@ $def with ()
             <th><b>Time Slot</b></th>
             <th><b>Description</b></th>
         </tr>
-        <tr><td>No tasks</td></tr>
+        <tr>
+
+
+        </tr>
     </table>
     <div id="googlemap" style="width:500px;height:380px;"></div>
 </body>
