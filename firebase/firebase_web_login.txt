@@ -1,0 +1,6 @@
+Email: green.tea.student@gamil.com
+Pass: nwhackathon
+
+goto https://www.firebase.com/login/ and login.
+
+Then navigate to https://curo.firebaseio.com/ to see the datastore
