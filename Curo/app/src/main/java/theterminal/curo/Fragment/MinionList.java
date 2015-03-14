@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import theterminal.curo.Adapter.MinionAdapter;
 import theterminal.curo.Model.Minion;
+import theterminal.curo.Model.Task;
 import theterminal.curo.R;
 
 /**
@@ -65,10 +67,24 @@ public class MinionList extends Fragment {
     public void onActivityCreated(Bundle savedInstanceStates){
         super.onActivityCreated(savedInstanceStates);
 
+        mMinions = new ArrayList<Minion>();
+
+        //MOCK VALUES
+        Task t1 = new Task("unload boxes", "ipsum", 0, null, null);
+        Task t2 = new Task("welcome customers", "dolor", 0, null, null);
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 1, t2, null));
+
         //assign ListView
         mListView = (ListView) getActivity().findViewById(R.id.fragment_minion_list_listview);
 
         //instantiate adapter
+        MinionAdapter adapter = new MinionAdapter(getActivity(), mMinions);
+
+        //set adapter
+        mListView.setAdapter(adapter);
+
+
 
 
     }

@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/minion_list_row_completion_icon"
+        android:layout_width="@dimen/minion_list_icon"
+        android:layout_height="@dimen/minion_list_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/ui_margin"/>
 
     <TextView
         android:id="@+id/minion_list_row_minon_name"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/minion_list_row_completion_icon"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/ui_margin"
+        android:layout_marginLeft="@dimen/ui_margin"
+        android:textSize="@dimen/text_large"/>
 
     <TextView
         android:id="@+id/minion_list_row_task_name"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/minion_list_row_minon_name"
+        android:layout_marginTop="@dimen/ui_margin"
+        android:layout_marginLeft="@dimen/double_margin"
+        android:maxLines="1"
+        android:maxLength="20"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_large"/>
 
-    <ImageView
-        android:id="@+id/minion_list_row_completion_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-</LinearLayout>
+
+</RelativeLayout>
