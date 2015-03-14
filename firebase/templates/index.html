@@ -1,0 +1,29 @@
+$def with ()
+<head>
+    <style>
+         table, th, td {
+            border: 1px solid black;
+        }
+
+    </style>
+    <meta http-equiv="refresh" content="5" >
+    <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+
+<body onLoad="buildTaskTable">
+    <table id="alertTable" onLoad="buildAlertTable()">
+    </table>
+    <table id="taskTable" >
+        <title>Task Table</title>
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Location</b></th>
+            <th><b>ID</b></th>
+            <th><b>Complete?</b></th>
+            <th><b>Time Slot</b></th>
+            <th><b>Description</b></th>
+        </tr>
+        <tr><td>No tasks</td></tr>
+    </table>
+</body>
