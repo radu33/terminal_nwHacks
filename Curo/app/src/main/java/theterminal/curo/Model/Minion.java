@@ -38,6 +38,7 @@ public class Minion {
      */
     public Minion(String name, int status, Task currentTask, ArrayList<Task> secondaryTasks){
         mName = name;
+        mStatus = status;
         mCurrentTask = currentTask;
         mTasks = secondaryTasks;
     }
@@ -53,6 +54,7 @@ public class Minion {
     public Minion(String name, int status, double latitude, double longitude ,
                   Task currentTask, ArrayList<Task> secondaryTasks){
         mName = name;
+        mStatus = status;
         mLat = latitude;
         mLong = longitude;
         mCurrentTask = currentTask;

@@ -1,10 +1,12 @@
 package theterminal.curo.Activity;
 
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import theterminal.curo.Fragment.MinionList;
 import theterminal.curo.R;
 
 public class PanelActivity extends ActionBarActivity {
@@ -13,6 +15,11 @@ public class PanelActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panel);
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        MinionList minionList = MinionList.getInstance();
+        fragmentTransaction.add(R.id.panel_minion_list, minionList);
+        fragmentTransaction.commit();
     }
 
 

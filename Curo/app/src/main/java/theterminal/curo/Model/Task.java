@@ -29,13 +29,14 @@ public class Task {
     /* Constructors */
 
     /**
-     *
+     * @param name name of task
      * @param desc  description
      * @param status completion status
      * @param startTime start time of task
      * @param endTime end time of task
      */
-    public Task(String desc, int status, GregorianCalendar startTime, GregorianCalendar endTime){
+    public Task(String name, String desc, int status, GregorianCalendar startTime, GregorianCalendar endTime){
+        mName = name;
         mDescrition = desc;
         mStatus = status;
         mStartTime = startTime;

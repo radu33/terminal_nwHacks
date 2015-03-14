@@ -53,12 +53,27 @@ public class MinionAdapter extends ArrayAdapter<Minion>{
             minionName.setText(mMinions.get(position).getName());
             taskName.setText(mMinions.get(position).getCurrentTask().getName());
 
-            //TODO: complete icons
-            //Drawable icon = getIcon();
+
+            Drawable icon = getIcon(mMinions.get(position).getStatus());
+
+            completionIcon.setImageDrawable(icon);
 
         }
 
         return rowView;
+    }
+
+    private Drawable getIcon(int status){
+        Drawable icon = null;
+        switch (status){
+            case 0: icon = mContext.getResources().getDrawable(R.drawable.icon_red);
+                break;
+            case 1: icon = mContext.getResources().getDrawable(R.drawable.icon_yellow);
+                break;
+            case 2: icon = mContext.getResources().getDrawable(R.drawable.icon_green);
+                break;
+        }
+        return icon;
     }
 
 
