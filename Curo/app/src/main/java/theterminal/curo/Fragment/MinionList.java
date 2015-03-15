@@ -10,7 +10,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 import theterminal.curo.Adapter.MinionAdapter;
 import theterminal.curo.Model.Minion;
@@ -73,8 +79,10 @@ public class MinionList extends Fragment {
 
         mMinions = new ArrayList<Minion>();
 
+        getMinions();
+
         //MOCK VALUES
-        Task t1 = new Task("unload boxes", "ipsum", 0, null, null);
+/*        Task t1 = new Task("unload boxes", "ipsum", 0, null, null);
         Task t2 = new Task("welcome customers", "dolor", 0, null, null);
         mMinions.add(new Minion("Vaastav", 0, t1, null));
         mMinions.add(new Minion("Raunak", 1, t2, null));
@@ -87,7 +95,7 @@ public class MinionList extends Fragment {
         mMinions.add(new Minion("Vaastav", 0, t1, null));
         mMinions.add(new Minion("Raunak", 2, t2, null));
         mMinions.add(new Minion("Vaastav", 0, t1, null));
-        mMinions.add(new Minion("Raunak", 1, t2, null));
+        mMinions.add(new Minion("Raunak", 1, t2, null));*/
 
 
         //assign ListView
@@ -108,6 +116,45 @@ public class MinionList extends Fragment {
         //set adapter
         mListView.setAdapter(adapter);
 
+    }
+
+    private void getMinions(){
+        Firebase firebase = new Firebase(getActivity().getResources().getString(R.string.firebase_url));
+        Firebase minions = firebase.child("minions");
+
+        minions.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map<String, String> newMinion = (Map<String, String>) dataSnapshot.getValue();
+
+
+                Task t = new Task("Unload Boxes", "perform this random task",  0, null, null);
+                mMinions.add(new Minion( newMinion.get("name"), 0, null, null));
+
+                MinionAdapter adapter = new MinionAdapter(getActivity(), mMinions);
+                mListView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     /* Nested Class */

@@ -113,7 +113,7 @@ public class PanelActivity extends ActionBarActivity implements MinionList.Liste
                         }
                     });
 
-                    firebase.child("minions").child("Vaastav").child("long").setValue(Double.toString(mMinion.getLong()), new Firebase.CompletionListener() {
+                    firebase.child("minions").child("Vaastav").child("lon").setValue(Double.toString(mMinion.getLong()), new Firebase.CompletionListener() {
                         @Override
                         public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                             if (firebaseError != null) {
