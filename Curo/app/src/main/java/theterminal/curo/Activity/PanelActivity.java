@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import theterminal.curo.Fragment.MinionList;
+import theterminal.curo.Fragment.TaskViewer;
+import theterminal.curo.Model.Task;
 import theterminal.curo.R;
 
 public class PanelActivity extends ActionBarActivity {
@@ -16,10 +18,18 @@ public class PanelActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panel);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransactionMinionList = getFragmentManager().beginTransaction();
         MinionList minionList = MinionList.getInstance();
-        fragmentTransaction.add(R.id.panel_minion_list, minionList);
-        fragmentTransaction.commit();
+        fragmentTransactionMinionList.add(R.id.panel_minion_list, minionList);
+        fragmentTransactionMinionList.commit();
+
+        FragmentTransaction fragmentTransactionTaskViewer = getFragmentManager().beginTransaction();
+        TaskViewer taskViewer = TaskViewer.getInstance(new Task("Unload Boxes",
+                "unload all electronic material from boxes and places them on garage table",
+                0, null, null));
+        fragmentTransactionTaskViewer.add(R.id.panel_task_viewer, taskViewer);
+        fragmentTransactionTaskViewer.commit();
+
     }
 
 

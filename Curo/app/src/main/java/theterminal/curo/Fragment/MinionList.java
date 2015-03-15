@@ -74,6 +74,17 @@ public class MinionList extends Fragment {
         Task t2 = new Task("welcome customers", "dolor", 0, null, null);
         mMinions.add(new Minion("Vaastav", 0, t1, null));
         mMinions.add(new Minion("Raunak", 1, t2, null));
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 2, t2, null));
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 2, t2, null));
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 1, t2, null));
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 2, t2, null));
+        mMinions.add(new Minion("Vaastav", 0, t1, null));
+        mMinions.add(new Minion("Raunak", 1, t2, null));
+
 
         //assign ListView
         mListView = (ListView) getActivity().findViewById(R.id.fragment_minion_list_listview);

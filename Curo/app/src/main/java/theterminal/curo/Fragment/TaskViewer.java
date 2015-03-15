@@ -1,6 +1,8 @@
 package theterminal.curo.Fragment;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +23,8 @@ public class TaskViewer extends Fragment {
     /* Fields */
 
     private static volatile TaskViewer instance;
-    private Task mCurrentTask;
+    private static Task mCurrentTask;
+    private Activity mActivity;
 
     //UI Elements
     private TextView name;
@@ -31,10 +34,12 @@ public class TaskViewer extends Fragment {
 
     /* Fragment States */
 
-    public static TaskViewer getInstance(){
+    public static TaskViewer getInstance(Task currentTask){
 
         if(instance == null)
             instance = new TaskViewer();
+
+        mCurrentTask = currentTask;
 
         return instance;
     }
@@ -51,12 +56,13 @@ public class TaskViewer extends Fragment {
         return inflater.inflate(R.layout.fragment_task_viewer, container, false);
     }
 
-    public void setCurrentTask(Task currentTask) {
-        mCurrentTask = currentTask;
+    @Override
+    public void onResume(){
+        super.onResume();
+
         setupUI();
         displayTask();
     }
-
 
     public void setupUI(){
 
@@ -74,7 +80,7 @@ public class TaskViewer extends Fragment {
     public void displayTask(){
 
         //name description
-        name.setText("Task Name: " + mCurrentTask.getName());
+        name.setText(mCurrentTask.getName());
         desc.setText("Description: " + mCurrentTask.getDescrition());
 
         //completion status
