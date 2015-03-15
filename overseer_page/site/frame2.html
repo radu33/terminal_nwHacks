@@ -1,0 +1,171 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <style>
+            html, body, #map-canvas {
+                height: 100%;
+                margin: 0px;
+                padding: 0px
+                }
+
+            tasktable, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                table-layout: fixed;
+                text-align: center;
+            }
+
+            th,td{
+                width: 30%;
+            }
+            
+        </style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Terminal Coordination</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbZTRKl5_gf8hpukMd_AhcuTeFr2slj8I"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    
+        <body>
+
+        <script src="js/taskTable.js">
+            var ref = new Firebase("https://curo.firebaseio.com/tasks");
+
+            // for new posts
+            ref.on("child_added", function(snapshot) {
+                    var newTask = snapshot.val();
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_changed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_removed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_moved", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+        </script>
+		<script>
+		function initialize(){
+	var myDataRef = new Firebase('https://curo.firebaseio.com/');
+	var minions = myDataRef.child('minions');
+	var overseer = myDataRef.child('Overseer');
+	var locations = myDataRef.child('areas');
+	var map;
+
+$.getJSON('https://curo.firebaseio.com/minions/Overseer/.json', function(data){
+	var lat,lon;
+	$.each(data, function(key,val){
+		if(key == "lat"){
+			lat = val;
+		}
+		else if(key == "lon"){
+			lon = val;
+		}
+	})
+	myLatLng = new google.maps.LatLng(lat,lon);
+	var mapOptions = {
+		zoom: 4,
+		center: myLatLng,
+		mapTypeId: google.maps.MapTypeId.SATELLITE
+	}
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+})
+
+$.getJSON('https://curo.firebaseio.com/minions/.json',function(data){
+	var lat,lon;
+	$.each(data, function(key,val){
+		lat = parseFloat(val.lat);
+		lon = parseFloat(val.lon);
+					marker = new google.maps.Marker
+				({
+					position: new google.maps.LatLng(lat,lon),
+					map: map,
+					icon: {
+					path: google.maps.SymbolPath.CIRCLE,
+					scale: 4
+					}
+				});
+	})
+})
+
+$.getJSON('https://curo.firebaseio.com/areas/.json',function(data){
+	var lat,lon,radius;
+	$.each(data, function(key,val){
+		lat = parseFloat(val.lat);
+		lon = parseFloat(val.lon);
+		radius = parseFloat(val.radius);
+		
+		marker = new google.maps.Marker
+				({
+					position: new google.maps.LatLng(lat,lon),
+					map: map,
+					opacity: 0.0
+				});
+				var populationOptions = {
+					strokeColor: '#FF0000',
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: '#FF0000',
+					fillOpacity: 0.35,
+					map: map,
+					center: marker.position,
+					radius: radius
+				};
+				cityCircle = new google.maps.Circle(populationOptions);
+				bounds.extend(marker.getPosition());
+				map.fitBounds(bounds);
+	})
+	
+  })
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+		<div id="map-canvas"></div>
+        </body>
+		
+</html>
+
