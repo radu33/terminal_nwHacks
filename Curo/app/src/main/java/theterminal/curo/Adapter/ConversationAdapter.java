@@ -1,11 +1,13 @@
 package theterminal.curo.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import theterminal.curo.Model.Message;
@@ -27,6 +29,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         super(context, R.layout.conversation_list_row, messages);
         mContext = context;
         mMessages = messages;
+        firstAuthor="";
     }
 
 
@@ -51,6 +54,16 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
             // color background based on the author
             message.setBackgroundColor(getBackground(mMessages.get(position)));
 
+
+            RelativeLayout.LayoutParams params =(RelativeLayout.LayoutParams)  message.getLayoutParams();
+            if(mMessages.get(position).getSender().equals(firstAuthor)) {
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            }
+            else
+            {
+                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            }
+
         }
 
         return rowView;
@@ -58,19 +71,19 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
 
     private int getBackground(Message m)
     {
-        if(firstAuthor.isEmpty())
+        if(firstAuthor == "")
         {
             firstAuthor = m.getSender();
-            return 1;
+            return Color.WHITE;
         }
         else
         {
             if(m.getSender()== firstAuthor) {
-                return 1;
+                return Color.WHITE;
             }
         }
 
-        return 0;
+        return Color.CYAN;
     }
 
 }

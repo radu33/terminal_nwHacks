@@ -73,6 +73,7 @@ public class Conversation extends Fragment {
 
         //instantiate adapter
         ConversationAdapter adapter = new ConversationAdapter(getActivity(),mMessages);
+        mListView.setAdapter(adapter);
 
     }
 

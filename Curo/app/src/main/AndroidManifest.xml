@@ -12,6 +12,12 @@
             android:label="@string/title_activity_panel"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".Activity.Login"
+            android:label="@string/title_activity_panel"
+            android:exported="true">
+        </activity>
     </application>
+
 
 </manifest>
