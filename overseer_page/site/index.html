@@ -1,6 +1,17 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
+        <style>
+            tasktable, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+
+            td, th {
+                width: 120px;
+            }
+        </style>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Terminal Coordination</title>
@@ -25,13 +36,4 @@
         <frame id="alertFrame">
         <script type='text/javascript' src='js/taskTable.js'> </script>
         </frame>
-        <p>Hello world!</p>
-
-        <script>
-            function gotdata(data) {
-                console.log(data);
-            }
-        </script>
-        <script src="https://curo.firebaseio.com/tasks.json?callback=gotdata">
-
 </html>
