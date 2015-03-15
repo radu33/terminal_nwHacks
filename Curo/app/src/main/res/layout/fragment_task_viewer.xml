@@ -1,25 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="theterminal.curo.Fragment.TaskViewer">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/task_viewer_bkgd"
+    tools:context="theterminal.curo.Fragment.TaskViewer">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ui_margin"
+        android:text="@string/task_viewer_current_task"
+        android:textSize="@dimen/text_small"/>
 
     <TextView
         android:id="@+id/task_viewer_task_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_margin"
+        android:layout_marginRight="@dimen/ui_margin"
+        android:textSize="@dimen/text_macro"/>
 
     <TextView
         android:id="@+id/task_viewer_task_desc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/double_margin"
+        android:textSize="@dimen/text_medium"/>
 
     <TextView
         android:id="@+id/task_viewer_completion_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/double_margin"
+        android:layout_marginRight="@dimen/double_margin"
+        android:textSize="@dimen/text_medium"/>
 
     <TextView
         android:id="@+id/task_viewer_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/double_margin"
+        android:layout_marginRight="@dimen/double_margin"
+        android:textSize="@dimen/text_medium"/>
 
-</FrameLayout>
+</LinearLayout>

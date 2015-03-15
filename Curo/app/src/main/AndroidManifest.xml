@@ -10,7 +10,8 @@
         <activity
             android:name=".Activity.PanelActivity"
             android:label="@string/title_activity_panel"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Activity.Login"
