@@ -1,0 +1,74 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <style>
+		            alerttable, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                table-layout: fixed;
+                text-align: center;
+            }
+			th,td{
+				width: 100%;
+			}
+		</style>
+		<link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+		        <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbZTRKl5_gf8hpukMd_AhcuTeFr2slj8I"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+		</head>
+		<body>
+		        <script type='text/javascript' src='js/alertTable.js'>
+            var ref = new Firebase("https://curo.firebaseio.com/alerts");
+
+            // for new posts
+            ref.on("child_added", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_changed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_removed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_moved", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message is wrong
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+        
+        </script>
+	</body>
+</html>
