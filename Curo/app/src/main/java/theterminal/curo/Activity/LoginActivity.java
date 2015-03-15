@@ -24,7 +24,7 @@ public class LoginActivity extends ActionBarActivity {
     private EditText username = null;
     private EditText password = null;
     private Button login;
-    private static final String FIREBASE_URL = "https://curo.firebaseio.com/";
+    private static String FIREBASE_URL;
 
     private Firebase mFirebaseRef;
 

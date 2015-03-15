@@ -3,6 +3,7 @@
     <string name="app_name">Curo</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_panel">Panel</string>
+    <string name="firebase_url">https://curo.firebaseio.com/</string>
 
     <string name="task_viewer_button_complete">Done</string>
     <string name="task_viewer_current_task">Current Task</string>
