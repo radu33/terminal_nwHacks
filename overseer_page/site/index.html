@@ -6,6 +6,7 @@
                 border: 1px solid black;
                 border-collapse: collapse;
                 table-layout: fixed;
+                text-align: center;
             }
 
             td, th {
@@ -34,6 +35,20 @@
         <frame id="actionFrame"> </frame>
         <frame id="mapFrame"> </frame>
         <frame id="alertFrame">
-        <script type='text/javascript' src='js/taskTable.js'> </script>
+        <script src="js/taskTable.js">
+            buildTaskTable();
+        </script>
+        <script type='text/javascript' src='js/alertTable.js'> </script>
+        <script src="js/taskTable.js">
+            var ref = new Firebase("https://curo.firebaseio.com/tasks");
+
+            // for new posts
+            ref.on("child_added", function(snapshot) {
+                    var newTask = snapshot.val();
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    buildTaskTable();
+                });
+
+        </script>
         </frame>
 </html>

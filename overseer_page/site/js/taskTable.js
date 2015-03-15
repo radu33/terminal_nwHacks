@@ -1,10 +1,8 @@
+function buildTaskTable() {
     var body = document.getElementsByTagName("body")[0];
     var myDataRef = new Firebase('https://curo.firebaseio.com/');
 
     var taskList = myDataRef.child('tasks');
-
-    var jsontemp = jQuery.getJSON('https://curo.firebaseio.com/tasks/.json');
-
     var theTaskTable = document.createElement("taskTable");
     var tblBody = document.createElement("tblBody");
 
@@ -54,9 +52,6 @@ $.getJSON('https://curo.firebaseio.com/tasks/.json', function(data) {
             
         });
     });
-
-
     theTaskTable.appendChild(tblBody);
     body.appendChild(theTaskTable);
-    theTaskTable.setAttribute("border", "1");
-    theTaskTable.setAttribute("padding", "3px");
+}
