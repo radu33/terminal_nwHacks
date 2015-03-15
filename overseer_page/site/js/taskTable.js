@@ -38,13 +38,13 @@ $.getJSON('https://curo.firebaseio.com/tasks/.json', function(data) {
             cell3.appendChild(cellTime);
             row.appendChild(cell3);
             var completionString = ""
-            if (val.completion = 0) {
+            if (val.completion == 0) {
                 completionString = "Done";
             }; 
-            if (val.completion = 1) {
-                completionString = "In Progress";
+            if (val.completion == 1) {
+                completionString == "In Progress";
             } else {
-                completionString = "Not Started";
+                completionString == "Not Started";
             }
             var cellProg = document.createTextNode(completionString);
             var cell4 = document.createElement("td");
