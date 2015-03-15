@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 
@@ -62,6 +63,7 @@ public class Conversation extends Fragment {
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
     private ConversationAdapter mChatListAdapter;
+    private Button send_btn;
 
     /**
      * Singleton pattern instantiation
@@ -93,7 +95,7 @@ public class Conversation extends Fragment {
         getActivity().setTitle("Chatting as " + mUsername);
 
         // Setup our Firebase mFirebaseRef
-        mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
+        mFirebaseRef = new Firebase(FIREBASE_URL).child("conversations");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
         EditText inputText = (EditText) getActivity().findViewById(R.id.conversation_msg);
@@ -116,6 +118,25 @@ public class Conversation extends Fragment {
 
 
         return inflater.inflate(R.layout.fragment_conversation, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        send_btn = (Button) getActivity().findViewById(R.id.conversation_send_button);
+
+        //sets up click listener
+        send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId() == send_btn.getId()) {
+                    sendMessage();
+                    mChatListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
     }
 
     @Override

@@ -16,7 +16,7 @@ import theterminal.curo.Model.Minion;
 import theterminal.curo.R;
 
 /**
- * Created by Raza on 2015-03-14.
+ * Created by Radu on 2015-03-14.
  */
 public class ConversationAdapter extends ArrayAdapter<Message> {
     /* Fields */
