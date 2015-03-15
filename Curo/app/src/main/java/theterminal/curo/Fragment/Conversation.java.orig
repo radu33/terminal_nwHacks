@@ -59,12 +59,14 @@ public class Conversation extends Fragment {
     //ListView where messages are displayed
     private ListView mListView;
 
-    private Listener mListener;
-
+<<<<<<< HEAD
     private String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
     private ConversationAdapter mChatListAdapter;
+=======
+    private Listener mListener;
+>>>>>>> 5d3705665bd61c21628a49a84f474e3c415005a8
 
     /**
      * Singleton pattern instantiation
@@ -178,6 +180,7 @@ public class Conversation extends Fragment {
         //return messagesRaduAvo;
     }
 
+<<<<<<< HEAD
     private void setupUsername() {
         // get this from Firebase by querying the email
 
@@ -188,6 +191,12 @@ public class Conversation extends Fragment {
             mUsername = "DefaultUser";
         }
     }
+=======
+    public interface Listener{
+        public void closeFragment();
+    }
+
+>>>>>>> 5d3705665bd61c21628a49a84f474e3c415005a8
 
 
     private void sendMessage() {

@@ -1,6 +1,10 @@
 package theterminal.curo.Activity;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.location.Location;
+import android.location.LocationListener;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,12 +17,40 @@ import theterminal.curo.Model.Minion;
 import theterminal.curo.Model.Task;
 import theterminal.curo.R;
 
-public class PanelActivity extends ActionBarActivity implements MinionList.Listener{
+public class PanelActivity extends Activity implements MinionList.Listener, Conversation.Listener{
+
+    private Minion mMinion;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_panel);
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(mMinion != null){
+                    mMinion.setLat(location.getLatitude());
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        }
 
         FragmentTransaction fragmentTransactionMinionList = getFragmentManager().beginTransaction();
         MinionList minionList = MinionList.getInstance();
@@ -66,4 +98,10 @@ public class PanelActivity extends ActionBarActivity implements MinionList.Liste
         fragmentTransactionConversation.addToBackStack(null);
         fragmentTransactionConversation.commit();
     }
+
+    @Override
+    public void closeFragment() {
+        //do nothing
+    }
 }
+

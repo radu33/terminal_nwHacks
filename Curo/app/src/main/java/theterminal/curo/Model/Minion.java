@@ -85,4 +85,12 @@ public class Minion {
     public ArrayList<Task> getTasks() {
         return mTasks;
     }
+
+    public void setLong(double mLong) {
+        this.mLong = mLong;
+    }
+
+    public void setLat(double mLat) {
+        this.mLat = mLat;
+    }
 }

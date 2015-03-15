@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/task_viewer_bkgd"
+    android:background="#c3ff9300"
     tools:context="theterminal.curo.Fragment.TaskViewer">
 
     <TextView
