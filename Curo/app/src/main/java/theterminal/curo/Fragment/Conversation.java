@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.TimeZone;
@@ -112,7 +113,13 @@ public class Conversation extends Fragment {
             }
         });
         mFirebaseRef = new Firebase(getActivity().getResources().getString(R.string.firebase_url));
+        //assign ListView
+        mListView = (ListView) getActivity().findViewById(R.id.conversation_listview);
 
+        mMessages = getMessages();
+        //instantiate adapter
+        ConversationAdapter adapter = new ConversationAdapter(getActivity(),mMessages);
+        mListView.setAdapter(adapter);
     }
 
     @Override
@@ -121,15 +128,6 @@ public class Conversation extends Fragment {
 
         getActivity().setTitle("Messaging with " + receiver);
 
-        mMessages = getMessages();
-
-        //assign ListView
-        mListView = (ListView) getActivity().findViewById(R.id.conversation_listview);
-
-
-        //instantiate adapter
-        ConversationAdapter adapter = new ConversationAdapter(getActivity(),mMessages);
-        mListView.setAdapter(adapter);
 
     }
     @Override
@@ -152,7 +150,7 @@ public class Conversation extends Fragment {
     {
 // this should call the firebase database and get the data from there
 
-        ArrayList messages = new ArrayList<Message>();
+        final ArrayList messages = new ArrayList<Message>();
 
         Firebase ref1 = mFirebaseRef.child("conversations").child(mUsername).child(receiver);
         Firebase ref2 = mFirebaseRef.child("conversations").child(receiver).child(mUsername);
@@ -162,10 +160,12 @@ public class Conversation extends Fragment {
             // Retrieve new posts as they are added to Firebase
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
-
+                HashMap<String,String> mObj=(HashMap<String,String>)snapshot.getValue();
+                Message m = new Message(mObj.get("messageBody"));
+                m.setSender(mUsername);
+                m.setReceiver(receiver);
+                messages.add(m);
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -193,9 +193,11 @@ public class Conversation extends Fragment {
             // Retrieve new posts as they are added to Firebase
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
-                System.out.println("Author: " + newPost.get("author"));
-                System.out.println("Title: " + newPost.get("title"));
+                HashMap<String,String> mObj=(HashMap<String,String>)snapshot.getValue();
+                Message m = new Message(mObj.get("messageBody"));
+                m.setSender(receiver);
+                m.setReceiver(mUsername);
+                messages.add(m);
             }
 
             @Override
@@ -237,19 +239,13 @@ public class Conversation extends Fragment {
         EditText inputText = (EditText) getActivity().findViewById(R.id.conversation_msg);
         String input = inputText.getText().toString();
         if (!input.equals("")) {
-
-            Firebase ref = mFirebaseRef.child("conversations").child(mUsername).child(receiver).child("message_"+ GregorianCalendar.YEAR+GregorianCalendar.MONTH+GregorianCalendar.DATE+GregorianCalendar.HOUR+GregorianCalendar.MINUTE+GregorianCalendar.SECOND);
+            String appender= ""+GregorianCalendar.YEAR+GregorianCalendar.MONTH+GregorianCalendar.DATE+GregorianCalendar.HOUR+GregorianCalendar.MINUTE+GregorianCalendar.SECOND;
+            Firebase ref = mFirebaseRef.child("conversations").child(mUsername).child(receiver).child("message_"+appender);
             Map<String, Message> message = new HashMap<String, Message>();
             Message m= new Message(input);
-            message.put("message", m);
+            message.put("message_"+appender, m);
 
             ref.setValue(m);
-
-
-
-            Message msg = new Message(input, mUsername,receiver);
-            // Create a new, auto-generated child of that chat location, and save our chat data there
-
             inputText.setText("");
         }
     }
