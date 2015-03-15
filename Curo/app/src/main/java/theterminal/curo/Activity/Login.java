@@ -15,6 +15,7 @@ import android.widget.Toast;
 import theterminal.curo.Fragment.Conversation;
 import theterminal.curo.Fragment.LoginFragment;
 import theterminal.curo.R;
+import android.content.Intent;
 
 /**
  * Created by Radu on 2015-03-14.
@@ -28,21 +29,15 @@ public class Login extends ActionBarActivity {
     private Button login;
     private int counter = 3;
 
-    public void login(View view) {
-        if (authenticateUser(username.getText().toString(),password.getText().toString()))
-        {
+    public void login() {
+        if (authenticateUser(username.getText().toString(), password.getText().toString())) {
             Toast.makeText(getApplicationContext(), "Redirecting...",
                     Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, PanelActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "Wrong Credentials",
                     Toast.LENGTH_SHORT).show();
-            attempts.setBackgroundColor(Color.RED);
-            counter--;
-            attempts.setText(Integer.toString(counter));
-            if (counter == 0) {
-                login.setEnabled(false);
-            }
-
         }
     }
 
@@ -61,21 +56,33 @@ public class Login extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_panel);
+        setContentView(R.layout.login_page);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+/*        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         // you need a different fragment here
         // Conversation conversation = Conversation.getInstance();
         LoginFragment login_fr = LoginFragment.getInstance();
-        fragmentTransaction.add(R.id.panel_minion_list,login_fr);
-        fragmentTransaction.commit();
+        fragmentTransaction.add(R.id.panel_minion_list, login_fr);
+        fragmentTransaction.commit();*/
 
+        login = (Button) findViewById(R.id.button1);
+        username = (EditText) findViewById(R.id.editText1);
+        password = (EditText) findViewById(R.id.editText2);
 
-        username = (EditText)findViewById(R.id.editText1);
-        password = (EditText)findViewById(R.id.editText2);
-        login = (Button)findViewById(R.id.button1);
     }
 
+    public void onLoginClicked(View v){
+        if(v.getId() == login.getId()) {
+            login();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

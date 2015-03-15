@@ -13,7 +13,7 @@ import theterminal.curo.R;
 /**
  * Created by Radu on 2015-03-14.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment{
 
     /* Fields */
 
@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.login_page, container, false);
+
     }
 
     @Override

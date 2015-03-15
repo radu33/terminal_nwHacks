@@ -15,4 +15,9 @@
     <dimen name='minion_list_icon'>18dp</dimen>
 
     <dimen name='panel_task_viewer_height'>330dp</dimen>
+
+
+    <dimen name="login_top">20dp</dimen>
+    <dimen name="login_right">15dp</dimen>
+    <dimen name="login_height">35dp</dimen>
 </resources>
