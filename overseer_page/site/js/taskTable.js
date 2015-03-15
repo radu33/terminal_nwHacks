@@ -1,30 +1,32 @@
     var body = document.getElementsByTagName("body")[0];
     var myDataRef = new Firebase('https://curo.firebaseio.com/');
-    var taskList = myDataRef.child('areas');
 
-    window.alert(taskList);
+ //   console.out(httpGet('https://curo.furebaseio.com/areas.json'));
+    var taskList = myDataRef.child('tasks');
 
-    //console.out(Firebase(taskList));
+    var jsontemp = jQuery.getJSON('https://curo.firebaseio.com/tasks/.json');
+//    console.log(jsontemp.responseText);
+ //   var parsedJson = $.parseJSON(jsontemp);
+//    console.log(parsedJson.count);
 
-    taskList.once('value', function(snapshot) {
-        //window.alert(snapshot.val());
-        var tempVar = snapshot.key();
-        window.alert(tempVar);
-        console.out(snapshot.toString());
-        console.out(snapshot.val().desc);
+$.getJSON('https://curo.firebaseio.com/tasks/.json', function(data) {
+        var items = [];
+        $.each(data, function (key, val) {
+            alert(key + val.desc);
+            var row = document.createElement("tr");
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(key + ": " + val.desc);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        });
+
+        $( "</table>", {
+            "class" : "my-new-table",
+            html: items.join("")
+        }).appendTo("body");
     });
 
-    var num = taskList.child(0);
-    var lat = num.child('lat');
-    var lon = num.child('lon');
-    var desc = num.child('desc');
 
-    num.once('value', function(snapshot) {
-        console.out(snapshot.val());
-    });
-
-
-    //var theTaskTable = document.getElementByID("taskTable");
     var theTaskTable = document.createElement("taskTable");
     var tblBody = document.createElement("tblBody");
 
@@ -41,14 +43,4 @@
     theTaskTable.appendChild(tblBody);
     body.appendChild(theTaskTable);
 
-//function httpGet(taskList){
-//        var xmlHttp = null;
-//
-//        xmlHttp = new XMLHttpRequest();
-//        xmlHttp.open("GET",taskList,false);
-//        xmlHttp.send(null);
-//        window.alert(xmlHttp.responseText);
-//        return xmlHttp.responseText;
-//    }
-//
 //window.alert("This is the alert");

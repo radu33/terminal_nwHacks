@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Terminal Coordination</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,13 +19,19 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </head>
-    <body>
+    
+        <frame id="actionFrame"> </frame>
+        <frame id="mapFrame"> </frame>
+        <frame id="alertFrame">
+        <script type='text/javascript' src='js/taskTable.js'> </script>
+        </frame>
         <p>Hello world!</p>
-        <table id=taskTable>
-        </table> 
-        <script type='text/javascript' src='js/taskTable.js'>
-            
-        </script>
 
-    </body>
+        <script>
+            function gotdata(data) {
+                console.log(data);
+            }
+        </script>
+        <script src="https://curo.firebaseio.com/tasks.json?callback=gotdata">
+
 </html>
