@@ -21,20 +21,15 @@
         <p>Hello world! This is HTML5 Boilerplate.</p>
 
         <script>
-            var myDataRef = new Firebase('https://curo.firebaseio.com/');
-            var taskList = 
+            var firebaseOrigin = 'https://curo.firebaseio.com/'
+            var myDataRef = new Firebase(firebaseOrigin);
+            var taskList = new FireBase(firebaseOrigin + '/tasks/')
             var List = require("collections/list");
             for (i = 0; i < 10; i++) {
-                List.
+            }
 
         </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>
-        </script>
-
-        <script>
-
-        </script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
