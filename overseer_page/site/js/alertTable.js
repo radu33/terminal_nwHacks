@@ -5,7 +5,7 @@ function buildAlertTable() {
     var myDataRef = new Firebase('https://curo.firebaseio.com/');
 
     var taskList = myDataRef.child('tasks');
-    var theTaskTable = document.createElement("alertTable");
+    var theAlertTable = document.createElement("alertTable");
     var tblBody = document.createElement("tblBody");
 
     var incomingMessageArray = [];
@@ -69,8 +69,8 @@ function buildAlertTable() {
         tblBody.appendChild(row);
     }
 
-    theTaskTable.appendChild(tblBody);
-    body.appendChild(theTaskTable);
+    theAlertTable.appendChild(tblBody);
+    body.appendChild(theAlertTable);
 }
 
 function addAllChildren(sender, receiver, incomingMessageArray) {
@@ -78,7 +78,6 @@ function addAllChildren(sender, receiver, incomingMessageArray) {
     $.getJSON('https://curo.firebaseio.com/conversations/' + sender + '/' + receiver + '/.json', function(data) {
         var msgCount = 0;
         $.each(data, function(key, val) {
-            // TODO add msg count to data store
             incomingMessageArray[sender + msgCount] = key + '!!!' + value.isAlert + '!!!' + value.messageBody;
         });
     });
