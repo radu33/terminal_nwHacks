@@ -14,25 +14,18 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
-    </head>
-    <body>
-
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
-
-        <script>
-            var firebaseOrigin = 'https://curo.firebaseio.com/'
-            var myDataRef = new Firebase(firebaseOrigin);
-            var taskList = new FireBase(firebaseOrigin + '/tasks/')
-            var List = require("collections/list");
-            for (i = 0; i < 10; i++) {
-            }
-
-        </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+    </head>
+    <body>
+        <p>Hello world!</p>
+        <table id=taskTable>
+        </table> 
+        <script type='text/javascript' src='js/taskTable.js'>
+            
+        </script>
 
     </body>
 </html>
