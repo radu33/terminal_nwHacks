@@ -2,13 +2,17 @@ package theterminal.curo.Activity;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.firebase.client.Firebase;
 
 import theterminal.curo.Fragment.Conversation;
 import theterminal.curo.Fragment.MinionList;
@@ -17,10 +21,11 @@ import theterminal.curo.Model.Minion;
 import theterminal.curo.Model.Task;
 import theterminal.curo.R;
 
-public class PanelActivity extends Activity implements MinionList.Listener, Conversation.Listener{
+public class PanelActivity extends ActionBarActivity implements MinionList.Listener{
 
     private Minion mMinion;
     private LocationListener locationListener;
+    private Firebase firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +33,29 @@ public class PanelActivity extends Activity implements MinionList.Listener, Conv
 
         setContentView(R.layout.activity_panel);
 
+        mMinion = new Minion("Vaastav", 0, null, null);
+        Firebase.setAndroidContext(this);
+        firebase = new Firebase(getResources().getString(R.string.firebase_url));
+
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        Log.d("location", Double.toString(location.getLatitude()));
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if(mMinion != null){
                     mMinion.setLat(location.getLatitude());
+                    mMinion.setLong(location.getLongitude());
+
+                    firebase.child("minions").child(mMinion.getName()).child("lat").setValue(mMinion.getLat());
+                    firebase.child("minions").child(mMinion.getName()).child("long").setValue(mMinion.getLong());
                 }
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
             }
 
             @Override
@@ -50,7 +67,7 @@ public class PanelActivity extends Activity implements MinionList.Listener, Conv
             public void onProviderDisabled(String provider) {
 
             }
-        }
+        };
 
         FragmentTransaction fragmentTransactionMinionList = getFragmentManager().beginTransaction();
         MinionList minionList = MinionList.getInstance();
@@ -99,9 +116,5 @@ public class PanelActivity extends Activity implements MinionList.Listener, Conv
         fragmentTransactionConversation.commit();
     }
 
-    @Override
-    public void closeFragment() {
-        //do nothing
-    }
 }
 
