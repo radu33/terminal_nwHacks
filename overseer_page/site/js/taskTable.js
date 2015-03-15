@@ -1,3 +1,5 @@
+buildTaskTable();
+
 function buildTaskTable() {
     var body = document.getElementsByTagName("body")[0];
     var myDataRef = new Firebase('https://curo.firebaseio.com/');
