@@ -46,9 +46,44 @@
             ref.on("child_added", function(snapshot) {
                     var newTask = snapshot.val();
                     console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
                     buildTaskTable();
                 });
 
+            // for changed posts
+            ref.on("child_changed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_removed", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
+
+            // for changed posts
+            ref.on("child_moved", function(snapshot) {
+                    var newTask = snapshot.val();
+                    //TODO log message
+                    console.log("New Task in room " + newTask.location + ". It starts at " + newTask.time.start + " and requires a minion to " + newTask.desc + ".");
+                    var theBody = document.getElementByID('body');
+                    var d = document.getElementById('tasktable;);
+                    theBody.removeChild(d);
+                    buildTaskTable();
+                });
         </script>
         </frame>
 </html>
