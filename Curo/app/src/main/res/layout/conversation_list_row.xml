@@ -5,7 +5,7 @@
     android:layout_margin="@dimen/double_margin">
     <TextView
         android:id="@+id/conversation_list_row_message"
+        android:padding="@dimen/ui_margin"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:radius="5px"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

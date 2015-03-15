@@ -4,11 +4,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import java.util.ArrayList;
 
-import theterminal.curo.Adapter.ConversationAdapter;
-import theterminal.curo.Model.Message;
 import theterminal.curo.R;
 /**
  * Created by Radu on 2015-03-14.
@@ -41,7 +37,7 @@ public class LoginFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.login_page, container, false);
+        return inflater.inflate(R.layout.activity_login, container, false);
 
     }
 
