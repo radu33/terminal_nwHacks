@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import theterminal.curo.Adapter.ConversationAdapter;
 import theterminal.curo.Model.Message;
@@ -29,9 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 
@@ -210,16 +214,19 @@ public class Conversation extends Fragment {
         String input = inputText.getText().toString();
         if (!input.equals("")) {
 
+            Firebase ref = mFirebaseRef.child("conversations").child(mUsername).child(receiver);
+            Map<String, Message> message = new HashMap<String, Message>();
+            Message m= new Message();
+            message.put("message", m);
+
+            ref.push().setValue(message);
+
+
+
             Message msg = new Message(input, mUsername,receiver);
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            if(mUsername.equals("Radu Nesiu")) {
-                mFirebaseRef.push().setValue("conversations/'Radu Nesiu'/'Avetis Muradyan'");
-            }
-            else if(mUsername.equals("Avetis Muradyan"))
-            {
-                mFirebaseRef.push().setValue("conversations/'Avetis Muradyan'/'Radu Nesiu'");
-            }
-                inputText.setText("");
+
+            inputText.setText("");
         }
     }
 
