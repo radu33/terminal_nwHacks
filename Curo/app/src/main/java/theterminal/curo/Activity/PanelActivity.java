@@ -3,16 +3,21 @@ package theterminal.curo.Activity;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import theterminal.curo.Fragment.Conversation;
 import theterminal.curo.Fragment.MinionList;
@@ -37,37 +42,8 @@ public class PanelActivity extends ActionBarActivity implements MinionList.Liste
         Firebase.setAndroidContext(this);
         firebase = new Firebase(getResources().getString(R.string.firebase_url));
 
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        firebaseLocationUpdate();
 
-        Log.d("location", Double.toString(location.getLatitude()));
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                if(mMinion != null){
-                    mMinion.setLat(location.getLatitude());
-                    mMinion.setLong(location.getLongitude());
-
-                    firebase.child("minions").child(mMinion.getName()).child("lat").setValue(mMinion.getLat());
-                    firebase.child("minions").child(mMinion.getName()).child("long").setValue(mMinion.getLong());
-                }
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
 
         FragmentTransaction fragmentTransactionMinionList = getFragmentManager().beginTransaction();
         MinionList minionList = MinionList.getInstance();
@@ -114,6 +90,60 @@ public class PanelActivity extends ActionBarActivity implements MinionList.Liste
         fragmentTransactionConversation.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransactionConversation.addToBackStack(null);
         fragmentTransactionConversation.commit();
+    }
+
+    private void firebaseLocationUpdate(){
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(mMinion != null){
+                    mMinion.setLat(location.getLatitude());
+                    mMinion.setLong(location.getLongitude());
+
+                    firebase.child("minions").child("Vaastav").child("lat").setValue(Double.toString(mMinion.getLat()), new Firebase.CompletionListener() {
+                        @Override
+                        public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                            if (firebaseError != null) {
+                                Log.d("firebase", "Data could not be saved. " + firebaseError.getMessage());
+                            } else {
+                               Log.d("firebase", "Data saved successfully.");
+                            }
+                        }
+                    });
+
+                    firebase.child("minions").child("Vaastav").child("long").setValue(Double.toString(mMinion.getLong()), new Firebase.CompletionListener() {
+                        @Override
+                        public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                            if (firebaseError != null) {
+                                Log.d("firebase", "Data could not be saved. " + firebaseError.getMessage());
+                            } else {
+                                Log.d("firebase", "Data saved successfully.");
+                            }
+                        }
+                    });
+                }
+            }
+
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
 }
