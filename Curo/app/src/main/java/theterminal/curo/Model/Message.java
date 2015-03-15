@@ -12,16 +12,6 @@ public class Message {
     private Calendar mSendDate;
     private Boolean mIsAlert;
     private String mReceiver;
-    private String mSender;
-
-    public String getReceiver() {
-        return mReceiver;
-    }
-
-    public void setReceiver(String mReceiver) {
-        this.mReceiver = mReceiver;
-    }
-
 
     public String getSender() {
         return mSender;
@@ -30,6 +20,13 @@ public class Message {
     public void setSender(String mSender) {
         this.mSender = mSender;
     }
+
+    private String mSender;
+
+    public String getReceiver() {       return mReceiver;   }
+
+    public void setReceiver(String mReceiver) {
+       this.mReceiver = mReceiver;  }
 
     public Boolean getIsAlert() {
         return mIsAlert;
@@ -48,45 +45,44 @@ public class Message {
     }
 
 
-    public Calendar getSendDate() {
-        return mSendDate;
-    }
-
-    public void setSendDate(Calendar mSendDate) {
-        this.mSendDate = mSendDate;
-    }
-
-
 
 
     public Message()
     {
         mMessageBody= "Mock message body";
-        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
-        mReceiver = "Vaastav Anand";
-        mSender = "Radu Nesiu";
+//        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
+//        mReceiver = "Vaastav Anand";
+//        mSender = "Radu Nesiu";
         mIsAlert = false;
     }
 
     public Message(String body,Calendar date,String receiver,String sender,Boolean isAlert)
     {
         mMessageBody= body;
-        mSendDate = date;
-        mReceiver = receiver;
-        mSender = sender;
+//        mSendDate = date;
+//        mReceiver = receiver;
+//        mSender = sender;
         mIsAlert = isAlert;
     }
 
     public Message(String input,String username,String receiver)
     {
         mMessageBody= input;
-        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
-        mReceiver = receiver;
-        mSender = username;
+//        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
+//        mReceiver = receiver;
+//        mSender = username;
         mIsAlert = false;
     }
 
 
+    public Message(String input)
+    {
+        mMessageBody= input;
+//        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
+//        mReceiver = receiver;
+//        mSender = username;
+        mIsAlert = false;
+    }
 
 
 

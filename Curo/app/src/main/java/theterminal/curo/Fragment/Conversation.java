@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import theterminal.curo.Adapter.ConversationAdapter;
 import theterminal.curo.Model.Message;
@@ -54,20 +56,22 @@ public class Conversation extends Fragment {
 
     //current instance of Inbox, null when not instantiated
     private static volatile Conversation instance;
-    // TODO: change this to our own url
-    private static final String FIREBASE_URL = "https://android-chat.firebaseio-demo.com";
-    private String receiver;
+    private static String receiver;
 
     //List of messages to Display
     private ArrayList<Message> mMessages;
 
     //ListView where messages are displayed
     private ListView mListView;
-    private String mUsername;
+    private static String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
     private ConversationAdapter mChatListAdapter;
     private Button send_btn;
+
+    public Conversation() {
+
+    }
 
     /**
      * Singleton pattern instantiation
@@ -76,14 +80,11 @@ public class Conversation extends Fragment {
      */
     public static Conversation getInstance(Minion minion){
 
-        if(instance == null)
+        if(instance == null) {
             instance = new Conversation();
+        }
+        setupUsers(minion);
         return instance;
-    }
-
-    public Conversation() {
-        // Required empty public constructor
-
     }
 
 
@@ -91,35 +92,6 @@ public class Conversation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        // Make sure we have a mUsername
-        setupUsername();
-
-
-        getActivity().setTitle("Chatting as " + mUsername);
-
-        // Setup our Firebase mFirebaseRef
-        mFirebaseRef = new Firebase(FIREBASE_URL).child("conversations");
-
-        // Setup our input methods. Enter key on the keyboard or pushing the send button
-        EditText inputText = (EditText) getActivity().findViewById(R.id.conversation_msg);
-        inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    sendMessage();
-                }
-                return true;
-            }
-        });
-
-        getActivity().findViewById(R.id.conversation_send_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage();
-            }
-        });
-
 
         return inflater.inflate(R.layout.fragment_conversation, container, false);
     }
@@ -136,10 +108,10 @@ public class Conversation extends Fragment {
             public void onClick(View v) {
                 if(v.getId() == send_btn.getId()) {
                     sendMessage();
-                    mChatListAdapter.notifyDataSetChanged();
                 }
             }
         });
+        mFirebaseRef = new Firebase(getActivity().getResources().getString(R.string.firebase_url));
 
     }
 
@@ -163,7 +135,7 @@ public class Conversation extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        mFirebaseRef.getRoot().child(".info/connected").removeEventListener(mConnectedListener);
+        mFirebaseRef.child(".info/connected").removeEventListener(mConnectedListener);
  //       mChatListAdapter.cleanup();
     }
 
@@ -176,36 +148,88 @@ public class Conversation extends Fragment {
 
     }
 
-    static ArrayList<Message> getMessages()
+    private ArrayList<Message> getMessages()
     {
 // this should call the firebase database and get the data from there
 
-        ArrayList messagesRaduAvo = new ArrayList<Message>();
-        ArrayList messagesAvoRadu = new ArrayList<Message>();
+        ArrayList messages = new ArrayList<Message>();
 
-        // query the list of messages from Radu to Avo
+        Firebase ref1 = mFirebaseRef.child("conversations").child(mUsername).child(receiver);
+        Firebase ref2 = mFirebaseRef.child("conversations").child(receiver).child(mUsername);
 
 
-        // query the list of messages from Avo to Radu
+        ref1.addChildEventListener(new ChildEventListener() {
+            // Retrieve new posts as they are added to Firebase
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
 
-//  TODO: switch here !!!
-        messagesAvoRadu.addAll(messagesRaduAvo);
-        return messagesAvoRadu;
-        //messagesRaduAvo.addAll(messagesAvoRadu);
-        //return messagesRaduAvo;
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+            //... ChildEventListener also defines onChildChanged, onChildRemoved,
+            //    onChildMoved and onCanceled, covered in later sections.
+        });
+
+        ref2.addChildEventListener(new ChildEventListener() {
+            // Retrieve new posts as they are added to Firebase
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                Map<String, Object> newPost = (Map<String, Object>) snapshot.getValue();
+                System.out.println("Author: " + newPost.get("author"));
+                System.out.println("Title: " + newPost.get("title"));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+            //... ChildEventListener also defines onChildChanged, onChildRemoved,
+            //    onChildMoved and onCanceled, covered in later sections.
+        });
+
+        return messages;
     }
 
-    private void setupUsername() {
+    private static void setupUsers(Minion m) {
         // get this from Firebase by querying the email
 
         //  TODO: switch here !!!
         mUsername = "Radu Nesiu";
-        receiver= "Avetis Muradyan";
-        //mUsername = "Avetis Muradyan"; // for the second instance
-        //receiver= "Radu Nesiu";
-        if (mUsername == null || mUsername.isEmpty()) {
-            mUsername = "DefaultUser";
-        }
+        receiver= m.getName();
     }
 
 
@@ -214,12 +238,12 @@ public class Conversation extends Fragment {
         String input = inputText.getText().toString();
         if (!input.equals("")) {
 
-            Firebase ref = mFirebaseRef.child("conversations").child(mUsername).child(receiver);
+            Firebase ref = mFirebaseRef.child("conversations").child(mUsername).child(receiver).child("message_"+ GregorianCalendar.YEAR+GregorianCalendar.MONTH+GregorianCalendar.DATE+GregorianCalendar.HOUR+GregorianCalendar.MINUTE+GregorianCalendar.SECOND);
             Map<String, Message> message = new HashMap<String, Message>();
-            Message m= new Message();
+            Message m= new Message(input);
             message.put("message", m);
 
-            ref.push().setValue(message);
+            ref.setValue(m);
 
 
 
