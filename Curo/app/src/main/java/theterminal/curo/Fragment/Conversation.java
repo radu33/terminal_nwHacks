@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import theterminal.curo.Adapter.ConversationAdapter;
 import theterminal.curo.Model.Message;
+import theterminal.curo.Model.Minion;
 import theterminal.curo.R;
 
 
@@ -29,6 +30,8 @@ public class Conversation extends Fragment {
     //current instance of Inbox, null when not instantiated
     private static volatile Conversation instance;
 
+    private static Minion mMinion;
+
     //List of messages to Display
     private ArrayList<Message> mMessages;
 
@@ -40,10 +43,12 @@ public class Conversation extends Fragment {
      *
      * @return current instance of Inbox if instance is not null, else create new instance
      */
-    public static Conversation getInstance(){
+    public static Conversation getInstance(Minion minion){
 
         if(instance == null)
             instance = new Conversation();
+
+        mMinion = minion;
 
         return instance;
     }
@@ -64,6 +69,8 @@ public class Conversation extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceStates){
         super.onActivityCreated(savedInstanceStates);
+
+        getActivity().setTitle("Messaging with " + mMinion.getName());
 
         mMessages = getMessages();
 

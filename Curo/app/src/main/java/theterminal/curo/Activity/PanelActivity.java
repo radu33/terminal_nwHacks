@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import theterminal.curo.Fragment.Conversation;
 import theterminal.curo.Fragment.MinionList;
 import theterminal.curo.Fragment.TaskViewer;
+import theterminal.curo.Model.Minion;
 import theterminal.curo.Model.Task;
 import theterminal.curo.R;
 
-public class PanelActivity extends ActionBarActivity {
+public class PanelActivity extends ActionBarActivity implements MinionList.Listener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,7 @@ public class PanelActivity extends ActionBarActivity {
 
         FragmentTransaction fragmentTransactionMinionList = getFragmentManager().beginTransaction();
         MinionList minionList = MinionList.getInstance();
-        fragmentTransactionMinionList.add(R.id.panel_minion_list, minionList);
+        fragmentTransactionMinionList.add(R.id.panel_container_1, minionList);
         fragmentTransactionMinionList.commit();
 
         FragmentTransaction fragmentTransactionTaskViewer = getFragmentManager().beginTransaction();
@@ -53,5 +55,15 @@ public class PanelActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ListViewItemSelected(Minion minion) {
+        FragmentTransaction fragmentTransactionConversation = getFragmentManager().beginTransaction();
+        Conversation conversation = Conversation.getInstance(minion);
+        fragmentTransactionConversation.replace(R.id.panel_container_1, conversation);
+        fragmentTransactionConversation.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransactionConversation.addToBackStack(null);
+        fragmentTransactionConversation.commit();
     }
 }

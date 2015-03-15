@@ -2,6 +2,7 @@ package theterminal.curo.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
             //set minion and task names
             message.setText(mMessages.get(position).getMessageBody());
             // color background based on the author
-            message.setBackgroundColor(getBackground(mMessages.get(position)));
+            message.setBackground(getBackground(mMessages.get(position)));
 
 
             RelativeLayout.LayoutParams params =(RelativeLayout.LayoutParams)  message.getLayoutParams();
@@ -69,21 +70,21 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         return rowView;
     }
 
-    private int getBackground(Message m)
+    private Drawable getBackground(Message m)
     {
         if(firstAuthor == "")
         {
             firstAuthor = m.getSender();
-            return Color.WHITE;
+            return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_blue);
         }
         else
         {
             if(m.getSender()== firstAuthor) {
-                return Color.WHITE;
+                return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_blue);
             }
         }
 
-        return Color.CYAN;
+        return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_grey);
     }
 
 }

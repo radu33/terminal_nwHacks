@@ -44,4 +44,10 @@
         android:layout_marginRight="@dimen/double_margin"
         android:textSize="@dimen/text_medium"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_small"
+        android:text="@string/task_viewer_button_complete"/>
+
 </LinearLayout>

@@ -1,11 +1,13 @@
 package theterminal.curo.Fragment;
 
 
+import android.net.LinkAddress;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MinionList extends Fragment {
     //ListView where minions are displayed
     private ListView mListView;
 
-    //TODO: Add listener for listview
+    Listener mListener;
 
 
     /* Fragment States */
@@ -67,6 +69,8 @@ public class MinionList extends Fragment {
     public void onActivityCreated(Bundle savedInstanceStates){
         super.onActivityCreated(savedInstanceStates);
 
+        mListener = (Listener) getActivity();
+
         mMinions = new ArrayList<Minion>();
 
         //MOCK VALUES
@@ -89,15 +93,26 @@ public class MinionList extends Fragment {
         //assign ListView
         mListView = (ListView) getActivity().findViewById(R.id.fragment_minion_list_listview);
 
+        //handles clicks to listview
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.ListViewItemSelected(mMinions.get(position));
+            }
+        });
+
         //instantiate adapter
         MinionAdapter adapter = new MinionAdapter(getActivity(), mMinions);
 
         //set adapter
         mListView.setAdapter(adapter);
 
+    }
 
-
-
+    /* Nested Class */
+    public interface Listener{
+        public void ListViewItemSelected(Minion minion);
     }
 
 
