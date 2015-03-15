@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import theterminal.curo.R;
 import android.content.Intent;
+import com.firebase.client.Firebase;
+
 
 /**
  * Created by Radu on 2015-03-14.
@@ -22,11 +24,15 @@ public class LoginActivity extends ActionBarActivity {
     private EditText username = null;
     private EditText password = null;
     private Button login;
+    private static final String FIREBASE_URL = "https://curo.firebaseio.com/";
+
+    private Firebase mFirebaseRef;
 
     public void login() {
         if (authenticateUser(username.getText().toString(), password.getText().toString())) {
             Toast.makeText(getApplicationContext(), "Redirecting...",
                     Toast.LENGTH_SHORT).show();
+            // TODO: pass the username or store it somewhere
             Intent intent = new Intent(this, PanelActivity.class);
             startActivity(intent);
         } else {
@@ -51,8 +57,6 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
     }
 
     @Override
@@ -74,6 +78,7 @@ public class LoginActivity extends ActionBarActivity {
                 }
             }
         });
+
     }
 
 
