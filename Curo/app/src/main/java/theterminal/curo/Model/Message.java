@@ -77,6 +77,15 @@ public class Message {
         mIsAlert = isAlert;
     }
 
+    public Message(String input,String username,String receiver)
+    {
+        mMessageBody= input;
+        mSendDate = GregorianCalendar.getInstance(TimeZone.getDefault());
+        mReceiver = receiver;
+        mSender = username;
+        mIsAlert = false;
+    }
+
 
 
 

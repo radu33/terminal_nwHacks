@@ -51,16 +51,13 @@ public class Conversation extends Fragment {
     private static volatile Conversation instance;
     // TODO: change this to our own url
     private static final String FIREBASE_URL = "https://android-chat.firebaseio-demo.com";
-    private static Minion mMinion;
+    private String receiver;
 
     //List of messages to Display
     private ArrayList<Message> mMessages;
 
     //ListView where messages are displayed
     private ListView mListView;
-
-    private Listener mListener;
-
     private String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
@@ -75,9 +72,6 @@ public class Conversation extends Fragment {
 
         if(instance == null)
             instance = new Conversation();
-
-        mMinion = minion;
-
         return instance;
     }
 
@@ -102,7 +96,7 @@ public class Conversation extends Fragment {
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
-        EditText inputText = (EditText) findViewById(R.id.messageInput);
+        EditText inputText = (EditText) getActivity().findViewById(R.id.conversation_msg);
         inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -113,7 +107,7 @@ public class Conversation extends Fragment {
             }
         });
 
-        findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+        getActivity().findViewById(R.id.conversation_send_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
@@ -128,9 +122,7 @@ public class Conversation extends Fragment {
     public void onActivityCreated(Bundle savedInstanceStates){
         super.onActivityCreated(savedInstanceStates);
 
-        mListener = (Listener) getActivity();
-
-        getActivity().setTitle("Messaging with " + mMinion.getName());
+        getActivity().setTitle("Messaging with " + receiver);
 
         mMessages = getMessages();
 
@@ -147,7 +139,7 @@ public class Conversation extends Fragment {
     public void onStop() {
         super.onStop();
         mFirebaseRef.getRoot().child(".info/connected").removeEventListener(mConnectedListener);
-        mChatListAdapter.cleanup();
+ //       mChatListAdapter.cleanup();
     }
 
     @Override
@@ -171,7 +163,7 @@ public class Conversation extends Fragment {
 
         // query the list of messages from Avo to Radu
 
-
+//  TODO: switch here !!!
         messagesAvoRadu.addAll(messagesRaduAvo);
         return messagesAvoRadu;
         //messagesRaduAvo.addAll(messagesAvoRadu);
@@ -181,9 +173,11 @@ public class Conversation extends Fragment {
     private void setupUsername() {
         // get this from Firebase by querying the email
 
+        //  TODO: switch here !!!
         mUsername = "Radu Nesiu";
-        //mUsername = "Avetis Muradyan"; // for th second instance
-
+        receiver= "Avetis Muradyan";
+        //mUsername = "Avetis Muradyan"; // for the second instance
+        //receiver= "Radu Nesiu";
         if (mUsername == null || mUsername.isEmpty()) {
             mUsername = "DefaultUser";
         }
@@ -191,14 +185,20 @@ public class Conversation extends Fragment {
 
 
     private void sendMessage() {
-        EditText inputText = (EditText) findViewById(R.id.messageInput);
+        EditText inputText = (EditText) getActivity().findViewById(R.id.conversation_msg);
         String input = inputText.getText().toString();
         if (!input.equals("")) {
-            // Create our 'model', a Chat object
-            Chat chat = new Chat(input, mUsername);
+
+            Message msg = new Message(input, mUsername,receiver);
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            mFirebaseRef.push().setValue(chat);
-            inputText.setText("");
+            if(mUsername.equals("Radu Nesiu")) {
+                mFirebaseRef.push().setValue("conversations/'Radu Nesiu'/'Avetis Muradyan'");
+            }
+            else if(mUsername.equals("Avetis Muradyan"))
+            {
+                mFirebaseRef.push().setValue("conversations/'Avetis Muradyan'/'Radu Nesiu'");
+            }
+                inputText.setText("");
         }
     }
 
