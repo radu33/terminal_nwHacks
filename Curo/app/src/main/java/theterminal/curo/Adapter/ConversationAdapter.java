@@ -75,16 +75,16 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         if(firstAuthor == "")
         {
             firstAuthor = m.getSender();
-            return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_blue);
+            return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_grey);
         }
         else
         {
             if(m.getSender()== firstAuthor) {
-                return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_blue);
+                return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_grey);
             }
         }
 
-        return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_grey);
+        return mContext.getResources().getDrawable(R.drawable.rounded_rectangle_blue);
     }
 
 }

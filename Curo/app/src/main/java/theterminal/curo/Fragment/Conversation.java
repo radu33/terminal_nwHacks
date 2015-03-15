@@ -3,6 +3,9 @@ package theterminal.curo.Fragment;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -38,6 +41,8 @@ public class Conversation extends Fragment {
     //ListView where messages are displayed
     private ListView mListView;
 
+    private Listener mListener;
+
     /**
      * Singleton pattern instantiation
      *
@@ -70,6 +75,8 @@ public class Conversation extends Fragment {
     public void onActivityCreated(Bundle savedInstanceStates){
         super.onActivityCreated(savedInstanceStates);
 
+        mListener = (Listener) getActivity();
+
         getActivity().setTitle("Messaging with " + mMinion.getName());
 
         mMessages = getMessages();
@@ -81,6 +88,15 @@ public class Conversation extends Fragment {
         //instantiate adapter
         ConversationAdapter adapter = new ConversationAdapter(getActivity(),mMessages);
         mListView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
+        MenuItem closeFragment = menu.add("close Fragment");
+        closeFragment.setIcon(getActivity().getResources().getDrawable(R.drawable.ic_action_remove));
+        super.onCreateOptionsMenu(menu, menuInflater);
+
 
     }
 
@@ -97,6 +113,10 @@ public class Conversation extends Fragment {
 
 
         return messages;
+    }
+
+    public interface Listener{
+        public void closeFragment();
     }
 
 

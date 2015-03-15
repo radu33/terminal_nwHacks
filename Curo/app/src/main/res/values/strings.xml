@@ -4,8 +4,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_panel">Panel</string>
 
-    <string name="task_viewer_button_complete">Task Completed</string>
+    <string name="task_viewer_button_complete">Done</string>
     <string name="task_viewer_current_task">Current Task</string>
+
+    <string name="conversation_send_button">Send</string>
     
     <string name="login_button">Login</string>
     <string name="login_email_hint">Email Address</string>

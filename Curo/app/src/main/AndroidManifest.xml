@@ -16,10 +16,9 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/title_activity_panel"
-            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true">
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>
